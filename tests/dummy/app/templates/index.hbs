@@ -7,10 +7,26 @@
   {{visjs-node id=2 label='B' select=(action 'nodeClicked') color=nodeColor}}
   {{visjs-node id=3 label='C'}}
   {{visjs-node id=4 label='D'}}
+  {{visjs-node id=5 label='E'}}
+  {{visjs-node id=6 label='F'}}
+  {{visjs-node id=9 label='I'}}
+  {{visjs-node id=10 label='J'}}
+  {{visjs-node id=11 label='K'}}
+  {{visjs-node id=12 label='L'}}
   {{visjs-edge from=1 to=2}}
   {{visjs-edge from=2 to=3}}
   {{visjs-edge from=1 to=3}}
-  {{visjs-edge from=3 to=3}}
+  {{visjs-edge from=2 to=4}}
+  {{visjs-edge from=12 to=3}}
+  {{visjs-edge from=10 to=1}}
+  {{visjs-edge from=5 to=12}}
+  {{visjs-edge from=6 to=6}}
+  {{visjs-edge from=11 to=4}}
+  {{visjs-edge from=11 to=6}}
+  {{visjs-edge from=9 to=2}}
+  {{visjs-edge from=5 to=9}}
+  {{visjs-edge from=6 to=10}}
+  {{visjs-edge from=6 to=2}}
 {{/visjs-network}}
 
 <h5>Controller</h5>
@@ -32,11 +48,10 @@
   \{{visjs-node id=1 label='A' select=(action 'nodeClicked') color=nodeColor}}
   \{{visjs-node id=2 label='B' select=(action 'nodeClicked') color=nodeColor}}
   \{{visjs-node id=3 label='C'}}
-  \{{visjs-node id=4 label='D'}}
+  ...
   \{{visjs-edge from=1 to=2}}
   \{{visjs-edge from=2 to=3}}
-  \{{visjs-edge from=1 to=3}}
-  \{{visjs-edge from=3 to=3}}
+  ...
 \{{/visjs-network}}</pre>
 
 <h3>Further Details</h3>
