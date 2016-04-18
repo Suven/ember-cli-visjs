@@ -31,9 +31,19 @@ export default Ember.Component.extend(ContainerMixin, {
           break;
         case 'node':
           let simplifiedNode = { id: c.get('id'), label: c.get('label') };
+
           if (c.get('color')) {
             simplifiedNode.color = c.get('color');
           }
+
+          if (c.get('posX') || c.get('posX') === 0) {
+            simplifiedNode.x = c.get('posX');
+          }
+
+          if (c.get('posY') || c.get('posY') === 0) {
+            simplifiedNode.y = c.get('posY');
+          }
+
           nodes.push(simplifiedNode);
           if (c.get('select')) {
             nodesWithEvents.pushObject(c);
@@ -53,9 +63,10 @@ export default Ember.Component.extend(ContainerMixin, {
       this.get('options') || {}
     );
 
+    let _this = this;
+
     if (this.get('backgroundImage')) {
       let backgroundImage = new Image();
-      let _this = this;
 
       backgroundImage.onload = function() {
         network.on('beforeDrawing', (ctx) => {
@@ -72,7 +83,6 @@ export default Ember.Component.extend(ContainerMixin, {
     }
 
     if (nodesWithEvents.length) {
-      let _this = this;
       network.on('selectNode', (e) => {
         let [ selectedNode ] = e.nodes;
         let matchingChildNode = nodesWithEvents.findBy('id', selectedNode);
@@ -82,6 +92,18 @@ export default Ember.Component.extend(ContainerMixin, {
         }
       });
     }
+
+    network.on('dragEnd', (e) => {
+      let newPositions = network.getPositions(e.nodes);
+
+      Object.keys(newPositions).forEach((id) => {
+        let matchingChild = _this.get('_childLayers').find((c) => {
+          return `${c.get('id')}` === id;
+        });
+        matchingChild.set('posX', newPositions[id].x);
+        matchingChild.set('posY', newPositions[id].y);
+      });
+    });
 
     this.set('network', network);
   },

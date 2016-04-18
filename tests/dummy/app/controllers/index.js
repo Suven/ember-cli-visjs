@@ -8,7 +8,26 @@ export default Ember.Controller.extend({
     }
   },
 
-  nodeColor: '#FF0000',
+  noPhysicsOptions: {
+    edges: {
+      smooth: {
+        type: 'discrete',
+        forceDirection: 'none'
+      }
+    },
+    physics: {
+      enabled: false
+    }
+  },
+
+  nodeColor: '#FFFFFF',
+
+  bX: 50,
+  bY: 50,
+
+  posOfBChanged: Ember.observer('bX', 'bY', function() {
+    console.log(`B was moved to ${this.get('bX')}/${this.get('bY')}`);
+  }),
 
   actions: {
     nodeClicked(nodeId) {

@@ -54,6 +54,57 @@
   ...
 \{{/visjs-network}}</pre>
 
+<h3>No Physics, Moveable positions &amp; Arrows</h3>
+
+{{#visjs-network options=noPhysicsOptions}}
+  {{visjs-node id=1 label='A' posX=0 posY=100}}
+  {{visjs-node id=2 label='B' posX=bX posY=bY}}
+  {{visjs-node id=3 label='C' posX=0 posY=0}}
+  {{visjs-node id=4 label='D' posX=100 posY=0}}
+  {{visjs-node id=5 label='E' posX=100 posY=100}}
+  {{visjs-edge from=1 to=2 arrows='to'}}
+  {{visjs-edge from=2 to=3 arrows='to'}}
+  {{visjs-edge from=3 to=4 arrows='to'}}
+  {{visjs-edge from=4 to=5 arrows='to'}}
+  {{visjs-edge from=4 to=2 arrows='to'}}
+  {{visjs-edge from=5 to=1 arrows='to'}}
+{{/visjs-network}}
+
+<h5>Controller</h5>
+<pre>  noPhysicsOptions: {
+    edges: {
+      smooth: {
+        type: 'discrete',
+        forceDirection: 'none'
+      }
+    },
+    physics: {
+      enabled: false
+    }
+  },
+
+  bX: 50,
+  bY: 50,
+
+  posOfBChanged: Ember.observer('bX', 'bY', function() {
+    console.log(`B was moved to ${this.get('bX')}/${this.get('bY')}`);
+  }),</pre>
+
+<h5>Template</h5>
+<pre>\{{#visjs-network options=noPhysicsOptions}}
+  \{{visjs-node id=1 label='A' posX=0 posY=100}}
+  \{{visjs-node id=2 label='B' posX=bX posY=bY}}
+  \{{visjs-node id=3 label='C' posX=0 posY=0}}
+  \{{visjs-node id=4 label='D' posX=100 posY=0}}
+  \{{visjs-node id=5 label='E' posX=100 posY=100}}
+  \{{visjs-edge from=1 to=2 arrows='to'}}
+  \{{visjs-edge from=2 to=3 arrows='to'}}
+  \{{visjs-edge from=3 to=4 arrows='to'}}
+  \{{visjs-edge from=4 to=5 arrows='to'}}
+  \{{visjs-edge from=4 to=2 arrows='to'}}
+  \{{visjs-edge from=5 to=1 arrows='to'}}
+\{{/visjs-network}}</pre>
+
 <h3>Further Details</h3>
 
 <dl>
