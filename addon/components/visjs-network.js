@@ -52,6 +52,7 @@ export default Ember.Component.extend(ContainerMixin, {
           };
           ctx.drawImage(backgroundImage, offset.x, offset.y);
         });
+        network.redraw();
       };
 
       backgroundImage.src = this.get('backgroundImage');
