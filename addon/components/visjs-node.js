@@ -19,6 +19,20 @@ export default VisJsChild.extend({
    * The label to display within the node.
    * @type {String}
    */
-  label: ''
+  label: '',
+
+  /**
+   * @public
+   *
+   * If set, this overrides the networks global color.
+   * Use a Hex-Value when setting this.
+   * @type {String}
+   */
+  color: false,
+
+  colorChanged: Ember.observer('color', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeColor(this.get('id'), this.get('color'));
+  })
 
 });

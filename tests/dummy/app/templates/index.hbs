@@ -3,8 +3,8 @@
 <h3>Quick example</h3>
 
 {{#visjs-network options=networkOptions backgroundImage='wp.png' backgroundOffsetX=-600 backgroundOffsetY=-400}}
-  {{visjs-node id=1 label='A' select=(action 'nodeClicked')}}
-  {{visjs-node id=2 label='B' select=(action 'nodeClicked')}}
+  {{visjs-node id=1 label='A' select=(action 'nodeClicked') color=nodeColor}}
+  {{visjs-node id=2 label='B' select=(action 'nodeClicked') color=nodeColor}}
   {{visjs-node id=3 label='C'}}
   {{visjs-node id=4 label='D'}}
   {{visjs-edge from=1 to=2}}
@@ -18,12 +18,19 @@
     nodes: {
       color: '#C7F110'
     }
+  },
+  nodeColor: '#FF0000',
+  actions: {
+    nodeClicked(nodeId) {
+      this.set('nodeColor', `#${Math.floor(Math.random() * 16777215).toString(16)}`);
+      console.log(`${nodeId} was clicked`);
+    }
   }</pre>
 
 <h5>Template</h5>
-<pre>  \{{#visjs-network options=networkOptions backgroundImage='wp.png' backgroundOffsetX=-600 backgroundOffsetY=-400}}
-  \{{visjs-node id=1 label='A' select=(action 'nodeClicked')}}
-  \{{visjs-node id=2 label='B' select=(action 'nodeClicked')}}
+<pre>\{{#visjs-network options=networkOptions backgroundImage='wp.png' backgroundOffsetX=-600 backgroundOffsetY=-400}}
+  \{{visjs-node id=1 label='A' select=(action 'nodeClicked') color=nodeColor}}
+  \{{visjs-node id=2 label='B' select=(action 'nodeClicked') color=nodeColor}}
   \{{visjs-node id=3 label='C'}}
   \{{visjs-node id=4 label='D'}}
   \{{visjs-edge from=1 to=2}}

@@ -8,9 +8,12 @@ export default Ember.Controller.extend({
     }
   },
 
+  nodeColor: '#FF0000',
+
   actions: {
     nodeClicked(nodeId) {
-      alert(`${nodeId} was clicked`);
+      this.set('nodeColor', `#${Math.floor(Math.random() * 16777215).toString(16)}`);
+      console.log(`${nodeId} was clicked`);
     }
   }
 

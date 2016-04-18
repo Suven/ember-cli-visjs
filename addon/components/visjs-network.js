@@ -10,6 +10,8 @@ export default Ember.Component.extend(ContainerMixin, {
   layout,
   classNames: ['ember-cli-visjs ember-cli-visjs-network'],
 
+  network: false,
+
   didInsertElement() {
     this._super(...arguments);
 
@@ -24,7 +26,11 @@ export default Ember.Component.extend(ContainerMixin, {
           edges.push({ from: c.get('from'), to: c.get('to') });
           break;
         case 'node':
-          nodes.push({ id: c.get('id'), label: c.get('label') });
+          let simplifiedNode = { id: c.get('id'), label: c.get('label') };
+          if (c.get('color')) {
+            simplifiedNode.color = c.get('color');
+          }
+          nodes.push(simplifiedNode);
           if (c.get('select')) {
             nodesWithEvents.pushObject(c);
           }
@@ -34,9 +40,12 @@ export default Ember.Component.extend(ContainerMixin, {
       }
     });
 
+    this.set('nodes', new vis.DataSet(nodes));
+    this.set('edges', new vis.DataSet(edges));
+
     let network = new vis.Network(
       document.getElementById(this.get('elementId')),
-      { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) },
+      { nodes: this.get('nodes'), edges: this.get('edges') },
       this.get('options') || {}
     );
 
@@ -69,6 +78,13 @@ export default Ember.Component.extend(ContainerMixin, {
         }
       });
     }
+
+    this.set('network', network);
+  },
+
+  updateNodeColor(id, color) {
+    let allNodes = this.get('nodes');
+    allNodes.update({ id, color });
   }
 
 });
