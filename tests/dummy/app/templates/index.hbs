@@ -1,0 +1,40 @@
+<p>WIP. Currently supports <code>Network</code> only.</p>
+
+<h3>Quick example</h3>
+
+{{#visjs-network options=networkOptions backgroundImage='wp.png' backgroundOffsetX=-600 backgroundOffsetY=-400}}
+  {{visjs-node id=1 label='A' select=(action 'nodeClicked')}}
+  {{visjs-node id=2 label='B' select=(action 'nodeClicked')}}
+  {{visjs-node id=3 label='C'}}
+  {{visjs-node id=4 label='D'}}
+  {{visjs-edge from=1 to=2}}
+  {{visjs-edge from=2 to=3}}
+  {{visjs-edge from=1 to=3}}
+  {{visjs-edge from=3 to=3}}
+{{/visjs-network}}
+
+<h5>Controller</h5>
+<pre>  networkOptions: {
+    nodes: {
+      color: '#C7F110'
+    }
+  }</pre>
+
+<h5>Template</h5>
+<pre>  \{{#visjs-network options=networkOptions backgroundImage='wp.png' backgroundOffsetX=-600 backgroundOffsetY=-400}}
+    \{{visjs-node id=1 label='A'}}
+    \{{visjs-node id=2 label='B'}}
+    \{{visjs-node id=3 label='C'}}
+    \{{visjs-node id=4 label='D'}}
+    \{{visjs-edge from=1 to=2}}
+    \{{visjs-edge from=2 to=3}}
+    \{{visjs-edge from=1 to=3}}
+    \{{visjs-edge from=3 to=3}}
+  \{{/visjs-network}}</pre>
+
+<h3>Further Details</h3>
+
+<dl>
+  <dt>\{{visjs-node select='action'}}</dt>
+  <dd>The provided callback will receive 2 parameters: The first one being the id of the selected node, the second one being the raw event fired</dd>
+</dl>
