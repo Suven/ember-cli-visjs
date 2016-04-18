@@ -23,7 +23,11 @@ export default Ember.Component.extend(ContainerMixin, {
       let type = c.get('type');
       switch (type) {
         case 'edge':
-          edges.push({ from: c.get('from'), to: c.get('to') });
+          let simplifiedEdge = { from: c.get('from'), to: c.get('to') };
+          if (c.get('arrows')) {
+            simplifiedEdge.arrows = c.get('arrows');
+          }
+          edges.push(simplifiedEdge);
           break;
         case 'node':
           let simplifiedNode = { id: c.get('id'), label: c.get('label') };
