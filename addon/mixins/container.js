@@ -14,7 +14,6 @@ export default Ember.Mixin.create({
   registerChild(childLayer) {
     this._childLayers.addObject(childLayer);
 
-    // If container already setup setup child immediatly
     if (this._layer) {
       childLayer.layerSetup();
     }
@@ -23,7 +22,6 @@ export default Ember.Mixin.create({
   unregisterChild(childLayer) {
     this._childLayers.removeObject(childLayer);
 
-    // If container already setup teardown child immediatly
     if (this._layer) {
       childLayer.layerTeardown();
     }

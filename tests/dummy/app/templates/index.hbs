@@ -1,18 +1,19 @@
 <p>WIP. Currently supports <code>Network</code> only.</p>
 
 <h3>Quick example</h3>
+<p>This shows a physics-based visjs with a custom backgroundImage, select-Actions for Node A and B and custom colors.</p>
 
 {{#visjs-network options=networkOptions backgroundImage='wp.png' backgroundOffsetX=-600 backgroundOffsetY=-400}}
-  {{visjs-node id=1 label='A' select=(action 'nodeClicked') color=nodeColor}}
-  {{visjs-node id=2 label='B' select=(action 'nodeClicked') color=nodeColor}}
-  {{visjs-node id=3 label='C'}}
-  {{visjs-node id=4 label='D'}}
-  {{visjs-node id=5 label='E'}}
-  {{visjs-node id=6 label='F'}}
-  {{visjs-node id=9 label='I'}}
-  {{visjs-node id=10 label='J'}}
-  {{visjs-node id=11 label='K'}}
-  {{visjs-node id=12 label='L'}}
+  {{visjs-node nId=1 label='A' select=(action 'nodeClicked') color=nodeColor}}
+  {{visjs-node nId=2 label='B' select=(action 'nodeClicked') color=nodeColor}}
+  {{visjs-node nId=3 label='C'}}
+  {{visjs-node nId=4 label='D'}}
+  {{visjs-node nId=5 label='E'}}
+  {{visjs-node nId=6 label='F'}}
+  {{visjs-node nId=9 label='I'}}
+  {{visjs-node nId=10 label='J'}}
+  {{visjs-node nId=11 label='K'}}
+  {{visjs-node nId=12 label='L'}}
   {{visjs-edge from=1 to=2}}
   {{visjs-edge from=2 to=3}}
   {{visjs-edge from=1 to=3}}
@@ -45,23 +46,95 @@
 
 <h5>Template</h5>
 <pre>\{{#visjs-network options=networkOptions backgroundImage='wp.png' backgroundOffsetX=-600 backgroundOffsetY=-400}}
-  \{{visjs-node id=1 label='A' select=(action 'nodeClicked') color=nodeColor}}
-  \{{visjs-node id=2 label='B' select=(action 'nodeClicked') color=nodeColor}}
-  \{{visjs-node id=3 label='C'}}
+  \{{visjs-node nId=1 label='A' select=(action 'nodeClicked') color=nodeColor}}
+  \{{visjs-node nId=2 label='B' select=(action 'nodeClicked') color=nodeColor}}
+  \{{visjs-node nId=3 label='C'}}
   ...
   \{{visjs-edge from=1 to=2}}
   \{{visjs-edge from=2 to=3}}
   ...
 \{{/visjs-network}}</pre>
 
+<h3>Add/Remove nodes</h3>
+{{#visjs-network}}
+  {{#each visNodes as |x|}}
+    {{visjs-node nId=x.id label=x.id}}
+    {{visjs-edge from=x.id to=x.to}}
+  {{/each}}
+{{/visjs-network}}
+
+<div class="txt--center" style="margin-top: 1rem;">
+  <a {{action 'addNode'}} href="#!" class="btn btn--green">Add</a>
+  <a {{action 'removeNode'}} href="#!" class="btn btn--red">Remove</a>
+</div>
+
+<br>
+<pre>\{{#visjs-network}}
+  \{{#each visNodes as |x|}}
+    \{{visjs-node nId=x.id label=x.id}}
+    \{{visjs-edge from=x.id to=x.to}}
+  \{{/each}}
+\{{/visjs-network}}</pre>
+
+<h3>Focus or animate to a node</h3>
+{{#visjs-network storeAs=network}}
+  {{visjs-node nId=1 label='A'}}
+  {{visjs-node nId=2 label='B' color='#25ba84'}}
+  {{visjs-node nId=3 label='C'}}
+  {{visjs-node nId=4 label='D'}}
+  {{visjs-node nId=5 label='E'}}
+  {{visjs-node nId=6 label='F'}}
+  {{visjs-node nId=7 label='G'}}
+  {{visjs-node nId=8 label='H'}}
+  {{visjs-node nId=9 label='I'}}
+  {{visjs-node nId=10 label='J'}}
+  {{visjs-node nId=11 label='K' color='#e74c3c'}}
+  {{visjs-edge from=1 to=2}}
+  {{visjs-edge from=2 to=3}}
+  {{visjs-edge from=3 to=4}}
+  {{visjs-edge from=4 to=5}}
+  {{visjs-edge from=4 to=9}}
+  {{visjs-edge from=9 to=10}}
+  {{visjs-edge from=10 to=11}}
+  {{visjs-edge from=3 to=5}}
+  {{visjs-edge from=5 to=6}}
+  {{visjs-edge from=6 to=7}}
+  {{visjs-edge from=7 to=8}}
+{{/visjs-network}}
+
+<div class="txt--center" style="margin-top: 1rem;">
+  <a {{action 'moveToK'}} href="#!" class="btn btn--red">Move to K</a>
+  <a {{action 'focusB'}} href="#!" class="btn btn--green">Focus B</a>
+</div>
+
+<h5>Template</h5>
+<pre>  \{{#visjs-network storeAs=network}}
+    ...
+    \{{visjs-node nId=2 label='B' color='#25ba84'}}
+    ...
+    \{{visjs-node nId=11 label='K' color='#e74c3c'}}
+  \{{/visjs-network}}
+</pre>
+
+<h5>Controller</h5>
+<pre>  network: false,
+  actions: {
+    moveToK() {
+      this.get('network').moveTo(11);
+    },
+    focusB() {
+      this.get('network').focus(2);
+    }
+  }</pre>
+
 <h3>No Physics, Moveable positions &amp; Arrows</h3>
 
 {{#visjs-network options=noPhysicsOptions}}
-  {{visjs-node id=1 label='A' posX=0 posY=100}}
-  {{visjs-node id=2 label='B' posX=bX posY=bY}}
-  {{visjs-node id=3 label='C' posX=0 posY=0}}
-  {{visjs-node id=4 label='D' posX=100 posY=0}}
-  {{visjs-node id=5 label='E' posX=100 posY=100}}
+  {{visjs-node nId=1 label='A' posX=0 posY=100}}
+  {{visjs-node nId=2 label='B' posX=bX posY=bY}}
+  {{visjs-node nId=3 label='C' posX=0 posY=0}}
+  {{visjs-node nId=4 label='D' posX=100 posY=0}}
+  {{visjs-node nId=5 label='E' posX=100 posY=100}}
   {{visjs-edge from=1 to=2 arrows='to'}}
   {{visjs-edge from=2 to=3 arrows='to'}}
   {{visjs-edge from=3 to=4 arrows='to'}}
@@ -94,11 +167,11 @@
 
 <h5>Template</h5>
 <pre>\{{#visjs-network options=noPhysicsOptions}}
-  \{{visjs-node id=1 label='A' posX=0 posY=100}}
-  \{{visjs-node id=2 label='B' posX=bX posY=bY}}
-  \{{visjs-node id=3 label='C' posX=0 posY=0}}
-  \{{visjs-node id=4 label='D' posX=100 posY=0}}
-  \{{visjs-node id=5 label='E' posX=100 posY=100}}
+  \{{visjs-node nId=1 label='A' posX=0 posY=100}}
+  \{{visjs-node nId=2 label='B' posX=bX posY=bY}}
+  \{{visjs-node nId=3 label='C' posX=0 posY=0}}
+  \{{visjs-node nId=4 label='D' posX=100 posY=0}}
+  \{{visjs-node nId=5 label='E' posX=100 posY=100}}
   \{{visjs-edge from=1 to=2 arrows='to'}}
   \{{visjs-edge from=2 to=3 arrows='to'}}
   \{{visjs-edge from=3 to=4 arrows='to'}}

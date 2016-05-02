@@ -11,7 +11,7 @@ export default VisJsChild.extend({
    * edges.
    * @type {String}
    */
-  id: '',
+  nId: '',
 
   /**
    * @public
@@ -32,7 +32,7 @@ export default VisJsChild.extend({
 
   colorChanged: Ember.observer('color', function() {
     let container = this.get('containerLayer');
-    container.updateNodeColor(this.get('id'), this.get('color'));
+    container.updateNodeColor(this.get('nId'), this.get('color'));
   })
 
 });
