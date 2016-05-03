@@ -3,6 +3,7 @@ import Ember from 'ember';
 const { A } = Ember;
 
 export default Ember.Controller.extend({
+  notify: Ember.inject.service('notify'),
 
   network: false,
 
@@ -43,7 +44,7 @@ export default Ember.Controller.extend({
   bY: 50,
 
   posOfBChanged: Ember.observer('bX', 'bY', function() {
-    console.log(`B was moved to ${this.get('bX')}/${this.get('bY')}`);
+    this.get('notify').info(`B was moved to ${this.get('bX')}/${this.get('bY')}`);
   }),
 
   randomNode() {
@@ -55,7 +56,7 @@ export default Ember.Controller.extend({
 
     nodeClicked(nodeId) {
       this.set('nodeColor', `#${Math.floor(Math.random() * 16777215).toString(16)}`);
-      console.log(`${nodeId} was clicked`);
+      this.get('notify').info(`${nodeId} was clicked`);
     },
 
     moveToK() {

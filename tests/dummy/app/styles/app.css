@@ -20,3 +20,12 @@ pre {
   height: 400px;
   border: 1px solid #999;
 }
+
+.ember-notify.info {
+  background-color: #2792d9;
+  color: #fff;
+}
+
+.ember-notify.info a {
+  color: #fff;
+}
