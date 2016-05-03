@@ -22,30 +22,17 @@ export default Ember.Component.extend(ContainerMixin, {
   didInsertElement() {
     this._super(...arguments);
 
+    let options = this.get('options') || {};
+    options.manipulation = options.manipulation || {};
+    options.manipulation.addEdge = this.cEdgeAdded.bind(this);
+
     let network = new vis.Network(
       $(`#${this.get('elementId')} .network-canvas`)[0],
       { nodes: this.get('nodes'), edges: this.get('edges') },
-      this.get('options') || {}
+      options
     );
 
     let _this = this;
-
-    if (this.get('backgroundImage')) {
-      let backgroundImage = new Image();
-
-      backgroundImage.onload = function() {
-        network.on('beforeDrawing', (ctx) => {
-          let offset = {
-            x: _this.get('backgroundOffsetX') || backgroundImage.width / -2,
-            y: _this.get('backgroundOffsetY') || backgroundImage.height / -2
-          };
-          ctx.drawImage(backgroundImage, offset.x, offset.y);
-        });
-        network.redraw();
-      };
-
-      backgroundImage.src = this.get('backgroundImage');
-    }
 
     network.on('selectNode', (e) => {
       let [ selectedNode ] = e.nodes;
@@ -72,6 +59,67 @@ export default Ember.Component.extend(ContainerMixin, {
 
     this.set('network', network);
     this.set('storeAs', this);
+    this.setupBackgroundImage();
+  },
+
+  didUpdateAttrs(changes) {
+    this._super(...arguments);
+
+    if (changes.newAttrs.backgroundImage) {
+      this.setupBackgroundImage();
+    }
+
+    if (changes.newAttrs.addEdges) {
+      this.setupAddEdges();
+    }
+  },
+
+  setupBackgroundImage() {
+    if (!this.get('backgroundImage')) {
+      return;
+    }
+
+    console.log("foo");
+
+    let backgroundImage = new Image();
+    let network = this.get('network');
+    let _this = this;
+
+    backgroundImage.onload = function() {
+      network.on('beforeDrawing', (ctx) => {
+        let offset = {
+          x: _this.get('backgroundOffsetX') || backgroundImage.width / -2,
+          y: _this.get('backgroundOffsetY') || backgroundImage.height / -2
+        };
+        ctx.drawImage(backgroundImage, offset.x, offset.y);
+      });
+      network.redraw();
+    };
+
+    backgroundImage.src = this.get('backgroundImage');
+  },
+
+  setupAddEdges() {
+    if (this.get('addEdges')) {
+      this.get('network').addEdgeMode();
+    } else {
+      this.get('network').disableEditMode();
+    }
+  },
+
+  cEdgeAdded(edge, callback) {
+    // Trigger the optional callback
+    if (this.get('edgeAdded')) {
+      this.get('edgeAdded')(edge);
+    }
+
+    // Actually places the adge on visjs
+    callback(edge);
+
+    // vis disables adding edges after every edge by default
+    // this way we will reenable it after every edge if addEdges
+    // is still set
+    this.setupAddEdges();
   },
 
   registerChild(child) {

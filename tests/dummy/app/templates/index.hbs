@@ -180,6 +180,37 @@
   \{{visjs-edge from=5 to=1 arrows='to'}}
 \{{/visjs-network}}</pre>
 
+<h3>Adding edges</h3>
+
+{{#visjs-network storeAs=edgesNetwork addEdges=edgeManipulation edgeAdded=(action 'edgeAdded')}}
+  {{visjs-node nId=1}}
+  {{visjs-node nId=2}}
+  {{visjs-node nId=3}}
+  {{visjs-node nId=4}}
+  {{visjs-node nId=5}}
+  {{visjs-node nId=6}}
+  {{visjs-node nId=7}}
+  {{visjs-node nId=8}}
+  {{visjs-node nId=9}}
+  {{visjs-node nId=10}}
+  {{visjs-node nId=11}}
+  {{visjs-node nId=12}}
+{{/visjs-network}}
+
+<div class="txt--center" style="margin-top: 1rem;">
+  {{#if edgeManipulation}}
+    <a {{action 'toggleEdgeManipulation'}} href="#!" class="btn btn--green">Disable edge-edit</a>
+  {{else}}
+    <a {{action 'toggleEdgeManipulation'}} href="#!" class="btn btn--red">Enable edge-edit</a>
+  {{/if}}
+</div>
+
+<h5>Template</h5>
+<pre>\{{#visjs-network storeAs=edgesNetwork addEdges=true edgeAdded=(action 'edgeAdded')}}
+  \{{visjs-node nId=1}}
+  ...
+\{{/visjs-network}}</pre>
+
 <h3>Further Details</h3>
 
 <dl>

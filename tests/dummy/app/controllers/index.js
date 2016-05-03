@@ -80,6 +80,14 @@ export default Ember.Controller.extend({
 
     removeNode() {
       this.get('visNodes').removeObject(this.randomNode());
+    },
+
+    toggleEdgeManipulation() {
+      this.toggleProperty('edgeManipulation');
+    },
+
+    edgeAdded(edge) {
+      this.get('notify').info(JSON.stringify(edge));
     }
   }
 
