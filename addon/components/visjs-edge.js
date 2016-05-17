@@ -18,6 +18,15 @@ export default VisJsChild.extend({
    * Node-ID for the target-point of this edge.
    * @type {String}
    */
-  to: ''
+  to: '',
+
+  eId: Ember.computed('from', 'to', function() {
+    return `${this.get('from')}-${this.get('to')}`;
+  }),
+
+  arrowChanged: Ember.observer('arrows', function() {
+    let container = this.get('containerLayer');
+    container.updateEdgeArrow(this.get('eId'), this.get('arrows'));
+  })
 
 });

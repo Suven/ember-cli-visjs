@@ -72,14 +72,16 @@ export default Ember.Component.extend(ContainerMixin, {
     if (changes.newAttrs.addEdges) {
       this.setupAddEdges();
     }
+
+    if (changes.newAttrs.options) {
+      this.setupAddEdges();
+    }
   },
 
   setupBackgroundImage() {
     if (!this.get('backgroundImage')) {
       return;
     }
-
-    console.log("foo");
 
     let backgroundImage = new Image();
     let network = this.get('network');
@@ -108,13 +110,17 @@ export default Ember.Component.extend(ContainerMixin, {
   },
 
   cEdgeAdded(edge, callback) {
+    let cbResult;
+
     // Trigger the optional callback
     if (this.get('edgeAdded')) {
-      this.get('edgeAdded')(edge);
+      cbResult = this.get('edgeAdded')(edge);
     }
 
     // Actually places the adge on visjs
-    callback(edge);
+    if (cbResult !== false) {
+      callback(edge);
+    }
 
     // vis disables adding edges after every edge by default
     // this way we will reenable it after every edge if addEdges
@@ -169,7 +175,7 @@ export default Ember.Component.extend(ContainerMixin, {
 
   addEdge(edge) {
     let edges = this.get('edges');
-    let simplifiedEdge = { from: edge.get('from'), to: edge.get('to') };
+    let simplifiedEdge = { id: edge.get('eId'), from: edge.get('from'), to: edge.get('to') };
 
     if (edge.get('arrows')) {
       simplifiedEdge.arrows = edge.get('arrows');
@@ -194,6 +200,12 @@ export default Ember.Component.extend(ContainerMixin, {
 
   updateNodeColor(nId, color) {
     this.get('nodes').update({ id: nId, color });
+  },
+
+  updateEdgeArrow(eId, arrows) {
+    console.log(arrows);
+    this.get('edges').update({ id: eId, arrows });
+    console.log(this.get('edges'));
   }
 
 });
