@@ -207,6 +207,11 @@ export default Ember.Component.extend(ContainerMixin, {
     this.get('nodes').update({ id: nId, color });
   },
 
+  updateNodeLabel(nId, label) {
+    label = label ? label : undefined;
+    this.get('nodes').update({ id: nId, label });
+  },
+
   updateNodeImage(nId, image) {
     let val = { id: nId };
     val.shape = image ? 'image' : 'ellipse';
