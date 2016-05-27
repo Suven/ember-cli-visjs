@@ -170,6 +170,11 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.y = node.get('posY');
     }
 
+    if (node.get('image')) {
+      simplifiedNode.shape = 'image';
+      simplifiedNode.image = node.get('image');
+    }
+
     nodes.add(simplifiedNode);
   },
 
@@ -200,6 +205,13 @@ export default Ember.Component.extend(ContainerMixin, {
 
   updateNodeColor(nId, color) {
     this.get('nodes').update({ id: nId, color });
+  },
+
+  updateNodeImage(nId, image) {
+    let val = { id: nId };
+    val.shape = image ? 'image' : 'ellipse';
+    val.image = image ? image : undefined;
+    this.get('nodes').update(val);
   },
 
   updateEdgeArrow(eId, arrows) {

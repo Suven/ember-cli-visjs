@@ -211,6 +211,22 @@
   ...
 \{{/visjs-network}}</pre>
 
+<h3>Images</h3>
+{{#visjs-network}}
+  {{visjs-node nId=1}}
+  {{visjs-node nId=2 image=icon}}
+  {{visjs-node nId=3}}
+  {{visjs-node nId=4 image=icon}}
+  {{visjs-edge from=1 to=2}}
+  {{visjs-edge from=2 to=3}}
+  {{visjs-edge from=3 to=1}}
+{{/visjs-network}}
+
+<div class="txt--center" style="margin-top: 1rem;">
+  <a {{action 'swapIcon'}} href="#!" class="btn btn--green">Swap icon</a>
+  <a {{action 'toggleIcon'}} href="#!" class="btn btn--green">Toggle icon</a>
+</div>
+
 <h3>Further Details</h3>
 
 <dl>

@@ -6,6 +6,7 @@ export default Ember.Controller.extend({
   notify: Ember.inject.service('notify'),
 
   network: false,
+  icon: 'fire.png',
 
   visNodes: A([
     { id: 0, to: 4 },
@@ -65,6 +66,16 @@ export default Ember.Controller.extend({
 
     focusB() {
       this.get('network').focus(2);
+    },
+
+    swapIcon() {
+      let newIcon = this.get('icon') === 'fire.png' ? 'ice.png' : 'fire.png';
+      this.set('icon', newIcon);
+    },
+
+    toggleIcon() {
+      let newIcon = this.get('icon') ? false : 'ice.png';
+      this.set('icon', newIcon);
     },
 
     addNode() {

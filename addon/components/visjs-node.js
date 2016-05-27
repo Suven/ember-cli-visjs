@@ -33,6 +33,19 @@ export default VisJsChild.extend({
   colorChanged: Ember.observer('color', function() {
     let container = this.get('containerLayer');
     container.updateNodeColor(this.get('nId'), this.get('color'));
+  }),
+
+  /**
+   * @public
+   *
+   * If set, a given image-url will be shown as image.
+   * @type {String}
+   */
+  image: false,
+
+  imageChanged: Ember.observer('image', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeImage(this.get('nId'), this.get('image'));
   })
 
 });
