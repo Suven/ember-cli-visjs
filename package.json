@@ -1,6 +1,6 @@
 {
   "name": "ember-cli-visjs",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Create touch, scroll and zoomable graphs with nodes and edges via vis.js",
   "directories": {
     "doc": "doc",
