@@ -203,6 +203,10 @@ export default Ember.Component.extend(ContainerMixin, {
     });
   },
 
+  unselectAll() {
+    this.get('network').unselectAll();
+  },
+
   updateNodeColor(nId, color) {
     this.get('nodes').update({ id: nId, color });
   },
