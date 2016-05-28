@@ -170,6 +170,10 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.y = node.get('posY');
     }
 
+    if (node.get('value')) {
+      simplifiedNode.value = node.get('value');
+    }
+
     if (node.get('image')) {
       simplifiedNode.shape = 'image';
       simplifiedNode.image = node.get('image');
@@ -188,6 +192,10 @@ export default Ember.Component.extend(ContainerMixin, {
 
     if (edge.get('value')) {
       simplifiedEdge.value = edge.get('value');
+    }
+
+    if (edge.get('color')) {
+      simplifiedEdge.color = edge.get('color');
     }
 
     edges.add(simplifiedEdge);

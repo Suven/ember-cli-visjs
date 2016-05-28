@@ -37,6 +37,19 @@ export default VisJsChild.extend({
     container.updateEdgeValue(this.get('eId'), this.get('value'));
   }),
 
+  /**
+   * @public
+   *
+   * If set this defines edge's color
+   * @type {Int}
+   */
+  color: undefined,
+
+  colorChanged: Ember.observer('color', function() {
+    let container = this.get('containerLayer');
+    container.updateEdgeColor(this.get('eId'), this.get('color'));
+  }),
+
   arrowChanged: Ember.observer('arrows', function() {
     let container = this.get('containerLayer');
     container.updateEdgeArrow(this.get('eId'), this.get('arrows'));
