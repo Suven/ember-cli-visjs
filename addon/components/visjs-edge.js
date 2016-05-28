@@ -24,6 +24,20 @@ export default VisJsChild.extend({
     return `${this.get('from')}-${this.get('to')}`;
   }),
 
+  /**
+   * @public
+   *
+   * If set this displays a value under/in the node, depending on
+   * whether an image is shown or not.
+   * @type {String}
+   */
+  value: undefined,
+
+  valueChanged: Ember.observer('value', function() {
+    let container = this.get('containerLayer');
+    container.updateEdgeValue(this.get('eId'), this.get('value'));
+  }),
+
   arrowChanged: Ember.observer('arrows', function() {
     let container = this.get('containerLayer');
     container.updateEdgeArrow(this.get('eId'), this.get('arrows'));
