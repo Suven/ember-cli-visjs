@@ -15,17 +15,8 @@ export default Ember.Component.extend(ContainerMixin, {
   init() {
     this._super(...arguments);
 
-    if(this.get('nodesSet') || this.get('nodesSet').size === 0) {
-      this.set('nodes', new vis.DataSet([]));
-    } else {
-      this.set('nodes', new vis.DataSet(this.get('nodesSet')));
-    }
-
-    if(this.get('edgesSet') || this.get('edgesSet').size === 0) {
-      this.set('edges', new vis.DataSet([]));
-    } else {
-      this.set('edges', new vis.DataSet(this.get('edgesSet')));
-    }
+    this.set('nodes', new vis.DataSet([]));
+    this.set('edges', new vis.DataSet(this.get('edgesSet')));
   },
 
   didInsertElement() {
@@ -40,6 +31,13 @@ export default Ember.Component.extend(ContainerMixin, {
       { nodes: this.get('nodes'), edges: this.get('edges') },
       options
     );
+
+    if(this.get('nodesSet') && this.get('edgesSet')) {
+      network.setData({
+        nodes: this.get('nodesSet'),
+        edges: this.get('edgesSet')
+      });
+    }
 
     let _this = this;
 

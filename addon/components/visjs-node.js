@@ -52,7 +52,7 @@ export default VisJsChild.extend({
   imageChanged: Ember.observer('image', function() {
     let container = this.get('containerLayer');
     container.updateNodeImage(this.get('nId'), this.get('image'));
-  })
+  }),
 
   /**
    * @public
