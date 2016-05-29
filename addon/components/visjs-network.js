@@ -15,8 +15,17 @@ export default Ember.Component.extend(ContainerMixin, {
   init() {
     this._super(...arguments);
 
-    this.set('nodes', new vis.DataSet([]));
-    this.set('edges', new vis.DataSet([]));
+    if(this.get('nodesSet') || this.get('nodesSet').size === 0) {
+      this.set('nodes', new vis.DataSet([]));
+    } else {
+      this.set('nodes', new vis.DataSet(this.get('nodesSet')));
+    }
+
+    if(this.get('edgesSet') || this.get('edgesSet').size === 0) {
+      this.set('edges', new vis.DataSet([]));
+    } else {
+      this.set('edges', new vis.DataSet(this.get('edgesSet')));
+    }
   },
 
   didInsertElement() {
@@ -170,7 +179,7 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.y = node.get('posY');
     }
 
-    if (node.get('value')) {
+    if (node.get('value') || node.get('value') === 0) {
       simplifiedNode.value = node.get('value');
     }
 
