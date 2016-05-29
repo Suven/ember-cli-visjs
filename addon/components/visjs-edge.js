@@ -27,15 +27,27 @@ export default VisJsChild.extend({
   /**
    * @public
    *
-   * If set this displays a value under/in the node, depending on
-   * whether an image is shown or not.
-   * @type {String}
+   * If set this defines edge's weight (thickness).
+   * @type {Number}
    */
   value: undefined,
 
   valueChanged: Ember.observer('value', function() {
     let container = this.get('containerLayer');
     container.updateEdgeValue(this.get('eId'), this.get('value'));
+  }),
+
+  /**
+   * @public
+   *
+   * If set this defines edge's color
+   * @type {Int}
+   */
+  color: undefined,
+
+  colorChanged: Ember.observer('color', function() {
+    let container = this.get('containerLayer');
+    container.updateEdgeColor(this.get('eId'), this.get('color'));
   }),
 
   arrowChanged: Ember.observer('arrows', function() {
