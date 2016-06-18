@@ -64,6 +64,22 @@ export default Ember.Component.extend(ContainerMixin, {
       });
     });
 
+    network.on('startStabilizing', ( ) => {
+      this.attrs.startStabilizingAction();
+    });
+
+    network.on('stabilizationIterationsDone', ( ) => {
+      this.attrs.stabilizationIterationsDoneAction();
+    });
+
+    network.on('stabilized', (e) => {
+      this.attrs.stabilizedAction(e);
+    });
+
+    network.on('stabilizationProgress', (e) => {
+      this.attrs.stabilizationProgressAction(e);
+    });
+
     this.set('network', network);
     this.set('storeAs', this);
     this.setupBackgroundImage();
