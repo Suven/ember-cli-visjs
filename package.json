@@ -1,7 +1,7 @@
 {
-  "name": "ember-cli-visjs",
-  "version": "0.1.3",
-  "description": "Create touch, scroll and zoomable graphs with nodes and edges via vis.js",
+  "name": "elvis-network",
+  "version": "0.1.0",
+  "description": "Ember addon for vis.js integration (originally a fork of Suven/ember-cli-visjs)",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/Suven/ember-cli-visjs"
+    "url": "https://github.com/nightsh/elvis-network"
   },
   "engines": {
     "node": ">= 0.10.0"
@@ -49,6 +49,8 @@
     "nodes",
     "edges",
     "visjs",
+    "network",
+    "elvis",
     "ember-addon"
   ],
   "dependencies": {
