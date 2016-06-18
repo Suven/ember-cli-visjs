@@ -16,7 +16,7 @@ export default Ember.Component.extend(ContainerMixin, {
     this._super(...arguments);
 
     this.set('nodes', new vis.DataSet([]));
-    this.set('edges', new vis.DataSet([]));
+    this.set('edges', new vis.DataSet(this.get('edgesSet')));
   },
 
   didInsertElement() {
@@ -31,6 +31,13 @@ export default Ember.Component.extend(ContainerMixin, {
       { nodes: this.get('nodes'), edges: this.get('edges') },
       options
     );
+
+    if(this.get('nodesSet') && this.get('edgesSet')) {
+      network.setData({
+        nodes: this.get('nodesSet'),
+        edges: this.get('edgesSet')
+      });
+    }
 
     let _this = this;
 
@@ -55,6 +62,22 @@ export default Ember.Component.extend(ContainerMixin, {
         matchingChild.set('posX', newPositions[id].x);
         matchingChild.set('posY', newPositions[id].y);
       });
+    });
+
+    network.on('startStabilizing', ( ) => {
+      this.attrs.startStabilizingAction();
+    });
+
+    network.on('stabilizationIterationsDone', ( ) => {
+      this.attrs.stabilizationIterationsDoneAction();
+    });
+
+    network.on('stabilized', (e) => {
+      this.attrs.stabilizedAction(e);
+    });
+
+    network.on('stabilizationProgress', (e) => {
+      this.attrs.stabilizationProgressAction(e);
     });
 
     this.set('network', network);
@@ -170,6 +193,10 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.y = node.get('posY');
     }
 
+    if (node.get('value') || node.get('value') === 0) {
+      simplifiedNode.value = node.get('value');
+    }
+
     if (node.get('image')) {
       simplifiedNode.shape = 'image';
       simplifiedNode.image = node.get('image');
@@ -184,6 +211,14 @@ export default Ember.Component.extend(ContainerMixin, {
 
     if (edge.get('arrows')) {
       simplifiedEdge.arrows = edge.get('arrows');
+    }
+
+    if (edge.get('value')) {
+      simplifiedEdge.value = edge.get('value');
+    }
+
+    if (edge.get('color')) {
+      simplifiedEdge.color = edge.get('color');
     }
 
     edges.add(simplifiedEdge);
