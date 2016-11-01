@@ -47,6 +47,9 @@ export default Ember.Component.extend(ContainerMixin, {
         return `${c.get('nId')}` === `${selectedNode}`;
       });
 
+      if (_this.get('selectedNodes')) {
+        _this.set('selectedNodes', [selectedNode]);
+      }
       if (matchingChildNode) {
         matchingChildNode.get('select')(selectedNode, e);
       }
