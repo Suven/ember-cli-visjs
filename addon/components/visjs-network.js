@@ -44,6 +44,17 @@ export default Ember.Component.extend(ContainerMixin, {
         matchingChildNode.get('select')(selectedNode, e);
       }
     });
+    
+    network.on('selectEdge', (e) => {
+      let [ selectedEdge ] = e.edges;
+      let matchingChildEdge = _this.get('_childLayers').find((c) => {
+        return `${c.get('eId')}` === `${selectedEdge}`;
+      });
+
+      if (matchingChildEdge) {
+        matchingChildEdge.get('select')(selectedEdge, e);
+      }
+    });
 
     network.on('dragEnd', (e) => {
       let newPositions = network.getPositions(e.nodes);
