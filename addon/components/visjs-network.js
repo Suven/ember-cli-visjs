@@ -265,6 +265,20 @@ export default Ember.Component.extend(ContainerMixin, {
     console.log(arrows);
     this.get('edges').update({ id: eId, arrows });
     console.log(this.get('edges'));
+  },
+
+  setOptions(options) {
+    this.get('network').setOptions(options);
+  },
+
+  execute(fn, ...args) {
+    let network = this.get('network');
+    if (typeof network[fn] === 'function') {
+      return network[fn](...args);
+    } else {
+      console.error(`Could not find function ${fn}`);
+      return false;
+    }
   }
 
 });
