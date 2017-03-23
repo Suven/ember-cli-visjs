@@ -55,6 +55,29 @@ export default Ember.Component.extend(ContainerMixin, {
       }
     });
 
+    network.on('deselectNode', (e) => {
+      if (_this.get('selectedNodes')) {
+        _this.set('selectedNodes', []);
+      }
+    });
+
+    network.on('selectEdge', (e) => {
+      let [ selectedEdge ] = e.edges;
+      console.log('edge selected');
+
+      if (_this.get('selectedEdges')) {
+        _this.set('selectedEdges', [selectedEdge]);
+      }
+    });
+
+    network.on('deselectEdge', (e) => {
+      console.log('edge released');
+
+      if (_this.get('selectedEdges')) {
+        _this.set('selectedEdges', []);
+      }
+    });
+
     network.on('dragEnd', (e) => {
       let newPositions = network.getPositions(e.nodes);
 
