@@ -62,17 +62,13 @@ export default Ember.Component.extend(ContainerMixin, {
     });
 
     network.on('selectEdge', (e) => {
-      let [ selectedEdge ] = e.edges;
-      console.log('edge selected');
-
+      let selectedEdges = e.edges;
       if (_this.get('selectedEdges')) {
-        _this.set('selectedEdges', [selectedEdge]);
+        _this.set('selectedEdges', selectedEdges);
       }
     });
 
     network.on('deselectEdge', (e) => {
-      console.log('edge released');
-
       if (_this.get('selectedEdges')) {
         _this.set('selectedEdges', []);
       }
@@ -85,8 +81,10 @@ export default Ember.Component.extend(ContainerMixin, {
         let matchingChild = _this.get('_childLayers').find((c) => {
           return `${c.get('nId')}` === `${id}`;
         });
-        matchingChild.set('posX', newPositions[id].x);
-        matchingChild.set('posY', newPositions[id].y);
+        if (matchingChild) {
+          matchingChild.set('posX', newPositions[id].x);
+          matchingChild.set('posY', newPositions[id].y);
+        }
       });
     });
 
