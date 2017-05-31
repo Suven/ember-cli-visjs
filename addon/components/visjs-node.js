@@ -54,4 +54,17 @@ export default VisJsChild.extend({
     container.updateNodeImage(this.get('nId'), this.get('image'));
   })
 
+  /**
+   * @public
+   *
+   * If set, a value would be set to alter node's size
+   * @type {Number}
+   */
+  value: false,
+
+  valueChanged: Ember.observer('value', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeValue(this.get('nId'), this.get('value'));
+  })
+
 });
