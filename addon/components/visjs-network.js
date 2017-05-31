@@ -197,6 +197,10 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedEdge.arrows = edge.get('arrows');
     }
 
+    if (edge.get('value')) {
+      simplifiedEdge.value = edge.get('value');
+    }
+
     edges.add(simplifiedEdge);
   },
 
