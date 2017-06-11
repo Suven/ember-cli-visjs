@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import VisJsChild from 'ember-cli-visjs/components/visjs-child';
+import VisJsChild from 'elvis-network/components/visjs-child';
 
 export default VisJsChild.extend({
   type: 'edge',

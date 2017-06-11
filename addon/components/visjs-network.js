@@ -1,14 +1,14 @@
 /* globals vis */
 
 import Ember from 'ember';
-import ContainerMixin from 'ember-cli-visjs/mixins/container';
+import ContainerMixin from 'elvis-network/mixins/container';
 import layout from '../templates/components/visjs-network';
 
 const { A, assert, debug } = Ember;
 
 export default Ember.Component.extend(ContainerMixin, {
   layout,
-  classNames: ['ember-cli-visjs ember-cli-visjs-network'],
+  classNames: ['ember-cli-visjs ember-cli-visjs-network elvis-network'],
 
   network: false,
 
@@ -185,7 +185,7 @@ export default Ember.Component.extend(ContainerMixin, {
     } else if (type === 'edge') {
       this.addEdge(child);
     } else {
-      debug(`Child of type ${type} not supported by ember-cli-visjs`);
+      debug(`Child of type ${type} not supported by elvis-network`);
     }
   },
 
@@ -197,7 +197,7 @@ export default Ember.Component.extend(ContainerMixin, {
     if (type === 'node') {
       this.get('nodes').remove(child.get('nId'));
     } else if (type !== 'edge') {
-      debug(`Child of type ${type} not supported by ember-cli-visjs`);
+      debug(`Child of type ${type} not supported by elvis-network`);
     }
   },
 

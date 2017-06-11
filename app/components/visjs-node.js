@@ -1,1 +1,1 @@
-export { default } from 'ember-cli-visjs/components/visjs-node';
+export { default } from 'elvis-network/components/visjs-node';
