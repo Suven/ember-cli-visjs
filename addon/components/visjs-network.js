@@ -1,14 +1,14 @@
 /* globals vis */
 
 import Ember from 'ember';
-import ContainerMixin from 'ember-cli-visjs/mixins/container';
+import ContainerMixin from 'elvis-network/mixins/container';
 import layout from '../templates/components/visjs-network';
 
 const { A, assert, debug } = Ember;
 
 export default Ember.Component.extend(ContainerMixin, {
   layout,
-  classNames: ['ember-cli-visjs ember-cli-visjs-network'],
+  classNames: ['ember-cli-visjs ember-cli-visjs-network elvis-network'],
 
   network: false,
 
@@ -16,7 +16,7 @@ export default Ember.Component.extend(ContainerMixin, {
     this._super(...arguments);
 
     this.set('nodes', new vis.DataSet([]));
-    this.set('edges', new vis.DataSet([]));
+    this.set('edges', new vis.DataSet(this.get('edgesSet')));
   },
 
   didInsertElement() {
@@ -32,6 +32,13 @@ export default Ember.Component.extend(ContainerMixin, {
       options
     );
 
+    if(this.get('nodesSet') && this.get('edgesSet')) {
+      network.setData({
+        nodes: this.get('nodesSet'),
+        edges: this.get('edgesSet')
+      });
+    }
+
     let _this = this;
 
     network.on('selectNode', (e) => {
@@ -40,6 +47,9 @@ export default Ember.Component.extend(ContainerMixin, {
         return `${c.get('nId')}` === `${selectedNode}`;
       });
 
+      if (_this.get('selectedNodes')) {
+        _this.set('selectedNodes', [selectedNode]);
+      }
       if (matchingChildNode) {
         matchingChildNode.get('select')(selectedNode, e);
       }
@@ -56,6 +66,25 @@ export default Ember.Component.extend(ContainerMixin, {
       }
     });
 
+    network.on('deselectNode', (e) => {
+      if (_this.get('selectedNodes')) {
+        _this.set('selectedNodes', []);
+      }
+    });
+
+    network.on('selectEdge', (e) => {
+      let selectedEdges = e.edges;
+      if (_this.get('selectedEdges')) {
+        _this.set('selectedEdges', selectedEdges);
+      }
+    });
+
+    network.on('deselectEdge', (e) => {
+      if (_this.get('selectedEdges')) {
+        _this.set('selectedEdges', []);
+      }
+    });
+
     network.on('dragEnd', (e) => {
       let newPositions = network.getPositions(e.nodes);
 
@@ -63,9 +92,27 @@ export default Ember.Component.extend(ContainerMixin, {
         let matchingChild = _this.get('_childLayers').find((c) => {
           return `${c.get('nId')}` === `${id}`;
         });
-        matchingChild.set('posX', newPositions[id].x);
-        matchingChild.set('posY', newPositions[id].y);
+        if (matchingChild) {
+          matchingChild.set('posX', newPositions[id].x);
+          matchingChild.set('posY', newPositions[id].y);
+        }
       });
+    });
+
+    network.on('startStabilizing', ( ) => {
+      this.attrs.startStabilizingAction();
+    });
+
+    network.on('stabilizationIterationsDone', ( ) => {
+      this.attrs.stabilizationIterationsDoneAction();
+    });
+
+    network.on('stabilized', (e) => {
+      this.attrs.stabilizedAction(e);
+    });
+
+    network.on('stabilizationProgress', (e) => {
+      this.attrs.stabilizationProgressAction(e);
     });
 
     this.set('network', network);
@@ -149,7 +196,7 @@ export default Ember.Component.extend(ContainerMixin, {
     } else if (type === 'edge') {
       this.addEdge(child);
     } else {
-      debug(`Child of type ${type} not supported by ember-cli-visjs`);
+      debug(`Child of type ${type} not supported by elvis-network`);
     }
   },
 
@@ -161,7 +208,7 @@ export default Ember.Component.extend(ContainerMixin, {
     if (type === 'node') {
       this.get('nodes').remove(child.get('nId'));
     } else if (type !== 'edge') {
-      debug(`Child of type ${type} not supported by ember-cli-visjs`);
+      debug(`Child of type ${type} not supported by elvis-network`);
     }
   },
 
@@ -181,6 +228,10 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.y = node.get('posY');
     }
 
+    if (node.get('value') || node.get('value') === 0) {
+      simplifiedNode.value = node.get('value');
+    }
+
     if (node.get('image')) {
       simplifiedNode.shape = 'image';
       simplifiedNode.image = node.get('image');
@@ -195,6 +246,14 @@ export default Ember.Component.extend(ContainerMixin, {
 
     if (edge.get('arrows')) {
       simplifiedEdge.arrows = edge.get('arrows');
+    }
+
+    if (edge.get('value')) {
+      simplifiedEdge.value = edge.get('value');
+    }
+
+    if (edge.get('color')) {
+      simplifiedEdge.color = edge.get('color');
     }
 
     edges.add(simplifiedEdge);
@@ -238,6 +297,20 @@ export default Ember.Component.extend(ContainerMixin, {
     console.log(arrows);
     this.get('edges').update({ id: eId, arrows });
     console.log(this.get('edges'));
+  },
+
+  setOptions(options) {
+    this.get('network').setOptions(options);
+  },
+
+  execute(fn, ...args) {
+    let network = this.get('network');
+    if (typeof network[fn] === 'function') {
+      return network[fn](...args);
+    } else {
+      console.error(`Could not find function ${fn}`);
+      return false;
+    }
   }
 
 });

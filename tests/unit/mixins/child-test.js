@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ChildMixin from 'ember-cli-visjs/mixins/child';
+import ChildMixin from 'elvis-network/mixins/child';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | child');

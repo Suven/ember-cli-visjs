@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import VisJsChild from 'ember-cli-visjs/components/visjs-child';
+import VisJsChild from 'elvis-network/components/visjs-child';
 
 export default VisJsChild.extend({
   type: 'edge',
@@ -22,6 +22,32 @@ export default VisJsChild.extend({
 
   eId: Ember.computed('from', 'to', function() {
     return `${this.get('from')}-${this.get('to')}`;
+  }),
+
+  /**
+   * @public
+   *
+   * If set this defines edge's weight (thickness).
+   * @type {Number}
+   */
+  value: undefined,
+
+  valueChanged: Ember.observer('value', function() {
+    let container = this.get('containerLayer');
+    container.updateEdgeValue(this.get('eId'), this.get('value'));
+  }),
+
+  /**
+   * @public
+   *
+   * If set this defines edge's color
+   * @type {Int}
+   */
+  color: undefined,
+
+  colorChanged: Ember.observer('color', function() {
+    let container = this.get('containerLayer');
+    container.updateEdgeColor(this.get('eId'), this.get('color'));
   }),
 
   arrowChanged: Ember.observer('arrows', function() {

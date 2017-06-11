@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ContainerMixin from 'ember-cli-visjs/mixins/container';
+import ContainerMixin from 'elvis-network/mixins/container';
 const { computed, assert } = Ember;
 
 // From https://github.com/miguelcobain/ember-leaflet/blob/master/addon/mixins/child.js

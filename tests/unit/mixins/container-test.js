@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ContainerMixin from 'ember-cli-visjs/mixins/container';
+import ContainerMixin from 'elvis-network/mixins/container';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | container');

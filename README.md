@@ -1,8 +1,18 @@
-# Ember-cli-visjs [![Build Status](https://travis-ci.org/Suven/ember-cli-visjs.svg?branch=master)](https://travis-ci.org/Suven/ember-cli-visjs) [![Ember Observer Score](https://emberobserver.com/badges/ember-cli-visjs.svg)](https://emberobserver.com/addons/ember-cli-visjs)
+# Elvis-network 
 
 Simple ember-wrapper around [vis.js by almende](https://github.com/almende/vis).
 
-See the [demo](http://suven.github.io/ember-cli-visjs/) for examples and usage-infos.
+Forked for the sole purpose of improving by adding more compatibility with the 
+vis.js library while focusing only on its network features. Many kudos to Suven for
+starting this in the first place.
+
+Be aware that this addon will only support network visualisations available within vis.js. 
+If you look for a more general purpose project, head to [Suven/ember-cli-visjs](https://github.com/Suven/ember-cli-visjs).
+
+Name is inspired by the project starting this fork – 
+[Elvis, a public procurements explorer](https://github.com/tenders-exposed/elvis-ember).
+
+See original addon's [demo](http://suven.github.io/ember-cli-visjs/) for examples and usage-infos.
 
 A big _thank you_ to [ember-leaflet](https://github.com/miguelcobain/ember-leaflet) for their container/child-mixins.
 
@@ -10,7 +20,11 @@ A big _thank you_ to [ember-leaflet](https://github.com/miguelcobain/ember-leafl
 
 Make sure you are using a somewhat recent version of nodejs when installing. Everything > 4 should be fine.
 
-`ember install ember-cli-visjs`
+`ember install elvis-network`
+
+**Note:** Component name hadn't changed following the forking, in order to preserve compatibility. In the event the 
+current project diverges too much from its base or breaks functional compatibility, the name will be changed to 
+`{{elvis-network}}`.
 
 ## Usage
 

@@ -2,9 +2,23 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-cli-visjs',
+  name: 'elvis-network',
+  options: {
+    nodeAssets: {
+      'vis': {
+        vendor: {
+          srcDir: 'dist',
+          destDir: 'vis',
+          include: ['vis.js', 'vis.css'],
+        }
+      }
+    }
+  },
 
   included: function(app) {
-    app.import(app.bowerDirectory + '/vis/dist/vis.js');
+    this._super.included.apply(this, arguments);
+
+    app.import('vendor/vis/vis.js');
+    app.import('vendor/vis/vis.css');
   }
 };
