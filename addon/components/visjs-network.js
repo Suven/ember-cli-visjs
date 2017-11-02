@@ -181,6 +181,10 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.y = node.get('posY');
     }
 
+    if (node.get('level')) {
+      simplifiedNode.level = node.get('level');
+    }
+
     if (node.get('image')) {
       simplifiedNode.shape = 'image';
       simplifiedNode.image = node.get('image');
@@ -225,6 +229,10 @@ export default Ember.Component.extend(ContainerMixin, {
   updateNodeLabel(nId, label) {
     label = label ? label : undefined;
     this.get('nodes').update({ id: nId, label });
+  },
+
+  updateNodeLevel(nId, label) {
+    this.get('nodes').update({ id: nId, level });
   },
 
   updateNodeImage(nId, image) {

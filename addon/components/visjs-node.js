@@ -44,6 +44,19 @@ export default VisJsChild.extend({
   /**
    * @public
    *
+   * If set this gives the node a level used in hierarchical mode.
+   * @type {Number}
+   */
+  level: undefined,
+
+  levelChanged: Ember.observer('level', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeLevel(this.get('nId'), this.get('level'));
+  }),
+
+  /**
+   * @public
+   *
    * If set, a given image-url will be shown as image.
    * @type {String}
    */
