@@ -173,12 +173,8 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.color = node.get('color');
     }
 
-    if (node.get('posX') || node.get('posX') === 0) {
-      simplifiedNode.x = node.get('posX');
-    }
-
-    if (node.get('posY') || node.get('posY') === 0) {
-      simplifiedNode.y = node.get('posY');
+    if (node.get('font')) {
+      simplifiedNode.font = node.get('font');
     }
 
     if (node.get('level')) {
@@ -189,6 +185,15 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.shape = 'image';
       simplifiedNode.image = node.get('image');
     }
+
+    if (node.get('posX') || node.get('posX') === 0) {
+      simplifiedNode.x = node.get('posX');
+    }
+
+    if (node.get('posY') || node.get('posY') === 0) {
+      simplifiedNode.y = node.get('posY');
+    }
+
 
     nodes.add(simplifiedNode);
   },
@@ -226,12 +231,16 @@ export default Ember.Component.extend(ContainerMixin, {
     this.get('nodes').update({ id: nId, color });
   },
 
+  updateNodeFont(nId, font) {
+    this.get('nodes').update({ id: nId, font });
+  },
+
   updateNodeLabel(nId, label) {
     label = label ? label : undefined;
     this.get('nodes').update({ id: nId, label });
   },
 
-  updateNodeLevel(nId, label) {
+  updateNodeLevel(nId, level) {
     this.get('nodes').update({ id: nId, level });
   },
 
