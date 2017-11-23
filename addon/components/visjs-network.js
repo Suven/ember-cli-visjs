@@ -181,13 +181,13 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.group = node.get('group');
     }
 
-    if (node.get('level')) {
-      simplifiedNode.level = node.get('level');
-    }
-
     if (node.get('image')) {
       simplifiedNode.shape = 'image';
       simplifiedNode.image = node.get('image');
+    }
+
+    if (node.get('level')) {
+      simplifiedNode.level = node.get('level');
     }
 
     if (node.get('posX') || node.get('posX') === 0) {
@@ -198,6 +198,9 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.y = node.get('posY');
     }
 
+    if (node.get('title')) {
+      simplifiedNode.title = node.get('title');
+    }
 
     nodes.add(simplifiedNode);
   },
@@ -243,6 +246,13 @@ export default Ember.Component.extend(ContainerMixin, {
     this.get('nodes').update({ id: nId, group });
   },
 
+  updateNodeImage(nId, image) {
+    let val = { id: nId };
+    val.shape = image ? 'image' : 'ellipse';
+    val.image = image ? image : undefined;
+    this.get('nodes').update(val);
+  },
+
   updateNodeLabel(nId, label) {
     label = label ? label : undefined;
     this.get('nodes').update({ id: nId, label });
@@ -252,11 +262,8 @@ export default Ember.Component.extend(ContainerMixin, {
     this.get('nodes').update({ id: nId, level });
   },
 
-  updateNodeImage(nId, image) {
-    let val = { id: nId };
-    val.shape = image ? 'image' : 'ellipse';
-    val.image = image ? image : undefined;
-    this.get('nodes').update(val);
+  updateNodeTitle(nId, title) {
+    this.get('nodes').update({ id: nId, title });
   },
 
   updateEdgeArrow(eId, arrows) {

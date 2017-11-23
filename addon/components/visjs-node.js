@@ -56,6 +56,19 @@ export default VisJsChild.extend({
   /**
    * @public
    *
+   * If set, a given image-url will be shown as image.
+   * @type {String}
+   */
+  image: false,
+
+  imageChanged: Ember.observer('image', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeImage(this.get('nId'), this.get('image'));
+  }),
+
+  /**
+   * @public
+   *
    * If set this displays a label under/in the node, depending on
    * whether an image is shown or not.
    * @type {String}
@@ -83,14 +96,13 @@ export default VisJsChild.extend({
   /**
    * @public
    *
-   * If set, a given image-url will be shown as image.
-   * @type {String}
+   * If set, a given html element or string will be shown as a tooltip.
+   * @type {String|Element}
    */
-  image: false,
+  title: undefined,
 
-  imageChanged: Ember.observer('image', function() {
+  titleChanged: Ember.observer('title', function() {
     let container = this.get('containerLayer');
-    container.updateNodeImage(this.get('nId'), this.get('image'));
+    container.updateNodeTitle(this.get('nId'), this.get('title'));
   })
-
 });
