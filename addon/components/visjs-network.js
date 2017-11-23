@@ -267,9 +267,7 @@ export default Ember.Component.extend(ContainerMixin, {
   },
 
   updateEdgeArrow(eId, arrows) {
-    console.log(arrows);
     this.get('edges').update({ id: eId, arrows });
-    console.log(this.get('edges'));
   }
 
 });
