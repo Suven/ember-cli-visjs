@@ -44,7 +44,7 @@ export default Ember.Component.extend(ContainerMixin, {
         matchingChildNode.get('select')(selectedNode, e);
       }
     });
-    
+
     network.on('selectEdge', (e) => {
       let [ selectedEdge ] = e.edges;
       let matchingChildEdge = _this.get('_childLayers').find((c) => {
@@ -177,6 +177,10 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.font = node.get('font');
     }
 
+    if (node.get('group')) {
+      simplifiedNode.group = node.get('group');
+    }
+
     if (node.get('level')) {
       simplifiedNode.level = node.get('level');
     }
@@ -233,6 +237,10 @@ export default Ember.Component.extend(ContainerMixin, {
 
   updateNodeFont(nId, font) {
     this.get('nodes').update({ id: nId, font });
+  },
+
+  updateNodeGroup(nId, group) {
+    this.get('nodes').update({ id: nId, group });
   },
 
   updateNodeLabel(nId, label) {

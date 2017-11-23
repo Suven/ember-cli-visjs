@@ -43,6 +43,19 @@ export default VisJsChild.extend({
   /**
    * @public
    *
+   * If set this overwrites the default group settings.
+   * @type {String}
+   */
+  group: undefined,
+
+  groupChanged: Ember.observer('group', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeGroup(this.get('nId'), this.get('group'));
+  }),
+
+  /**
+   * @public
+   *
    * If set this displays a label under/in the node, depending on
    * whether an image is shown or not.
    * @type {String}
