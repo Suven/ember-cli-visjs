@@ -56,6 +56,19 @@ export default VisJsChild.extend({
   /**
    * @public
    *
+   * If set this overwrites the default icon settings.
+   * @type {Object|String}
+   */
+  icon: undefined,
+
+  iconChanged: Ember.observer('icon', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeIcon(this.get('nId'), this.get('icon'));
+  }),
+
+  /**
+   * @public
+   *
    * If set, a given image-url will be shown as image.
    * @type {String}
    */

@@ -181,6 +181,10 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedNode.group = node.get('group');
     }
 
+    if (node.get('icon')) {
+      simplifiedNode.icon = node.get('icon');
+    }
+
     if (node.get('image')) {
       simplifiedNode.shape = 'image';
       simplifiedNode.image = node.get('image');
@@ -244,6 +248,10 @@ export default Ember.Component.extend(ContainerMixin, {
 
   updateNodeGroup(nId, group) {
     this.get('nodes').update({ id: nId, group });
+  },
+
+  updateNodeIcon(nId, icon) {
+    this.get('nodes').update({ id: nId, icon });
   },
 
   updateNodeImage(nId, image) {
