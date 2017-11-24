@@ -20,6 +20,14 @@ export default VisJsChild.extend({
    */
   to: '',
 
+  /**
+   * @public
+   *
+   * The width of the edge.
+   * @type {Number}
+   */
+  width: undefined,
+
   eId: Ember.computed('from', 'to', function() {
     return `${this.get('from')}-${this.get('to')}`;
   }),
@@ -27,6 +35,10 @@ export default VisJsChild.extend({
   arrowChanged: Ember.observer('arrows', function() {
     let container = this.get('containerLayer');
     container.updateEdgeArrow(this.get('eId'), this.get('arrows'));
-  })
+  }),
 
+  widthChanged: Ember.observer('width', function() {
+    let container = this.get('containerLayer');
+    container.updateEdgeWidth(this.get('eId'), this.get('width'));
+  })
 });

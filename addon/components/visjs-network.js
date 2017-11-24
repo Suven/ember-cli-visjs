@@ -217,6 +217,10 @@ export default Ember.Component.extend(ContainerMixin, {
       simplifiedEdge.arrows = edge.get('arrows');
     }
 
+    if (edge.get('width')) {
+      simplifiedEdge.width = edge.get('width');
+    }
+
     edges.add(simplifiedEdge);
   },
 
@@ -276,6 +280,10 @@ export default Ember.Component.extend(ContainerMixin, {
 
   updateEdgeArrow(eId, arrows) {
     this.get('edges').update({ id: eId, arrows });
+  },
+
+  updateEdgeWidth(eId, width) {
+    this.get('edges').update({ id: eId, width });
   }
 
 });
