@@ -30,6 +30,58 @@ export default VisJsChild.extend({
   /**
    * @public
    *
+   * If set this overwrites the default font settings.
+   * @type {Object|String}
+   */
+  font: undefined,
+
+  fontChanged: Ember.observer('font', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeFont(this.get('nId'), this.get('font'));
+  }),
+
+  /**
+   * @public
+   *
+   * If set this overwrites the default group settings.
+   * @type {String}
+   */
+  group: undefined,
+
+  groupChanged: Ember.observer('group', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeGroup(this.get('nId'), this.get('group'));
+  }),
+
+  /**
+   * @public
+   *
+   * If set this overwrites the default icon settings.
+   * @type {Object|String}
+   */
+  icon: undefined,
+
+  iconChanged: Ember.observer('icon', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeIcon(this.get('nId'), this.get('icon'));
+  }),
+
+  /**
+   * @public
+   *
+   * If set, a given image-url will be shown as image.
+   * @type {String}
+   */
+  image: false,
+
+  imageChanged: Ember.observer('image', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeImage(this.get('nId'), this.get('image'));
+  }),
+
+  /**
+   * @public
+   *
    * If set this displays a label under/in the node, depending on
    * whether an image is shown or not.
    * @type {String}
@@ -57,14 +109,13 @@ export default VisJsChild.extend({
   /**
    * @public
    *
-   * If set, a given image-url will be shown as image.
-   * @type {String}
+   * If set, a given html element or string will be shown as a tooltip.
+   * @type {String|Element}
    */
-  image: false,
+  title: undefined,
 
-  imageChanged: Ember.observer('image', function() {
+  titleChanged: Ember.observer('title', function() {
     let container = this.get('containerLayer');
-    container.updateNodeImage(this.get('nId'), this.get('image'));
+    container.updateNodeTitle(this.get('nId'), this.get('title'));
   })
-
 });
