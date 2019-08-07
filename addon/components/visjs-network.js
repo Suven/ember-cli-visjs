@@ -201,7 +201,7 @@ export default Component.extend(ContainerMixin, {
 
   addEdge(edge) {
     let edges = this.get('edges');
-    let simplifiedEdge = { id: edge.get('eId'), from: edge.get('from'), to: edge.get('to') };
+    let simplifiedEdge = { id: edge.get('eId'), from: edge.get('from'), to: edge.get('to'), label: edge.get('label') };
 
     if (edge.get('arrows')) {
       simplifiedEdge.arrows = edge.get('arrows');
@@ -237,7 +237,11 @@ export default Component.extend(ContainerMixin, {
     this.get('nodes').update({ id: nId, label });
   },
 
-  updateNodeLevel(nId, label) {
+  updateEdgeLabel(eId, label) {
+    this.get('edges').update({ id: eId, label });
+  },
+
+  updateNodeLevel(nId, level) {
     this.get('nodes').update({ id: nId, level });
   },
 

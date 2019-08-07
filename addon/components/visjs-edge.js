@@ -27,6 +27,18 @@ export default VisJsChild.extend({
   arrowChanged: observer('arrows', function() {
     let container = this.get('containerLayer');
     container.updateEdgeArrow(this.get('eId'), this.get('arrows'));
-  })
+  }),
 
+  /**
+   * @public
+   *
+   * If set this displays a label on the edge
+   * @type {String}
+   */
+  label: undefined,
+
+  labelChanged: observer('label', function() {
+    let container = this.get('containerLayer');
+    container.updateNodeLabel(this.get('eId'), this.get('label'));
+  }),
 });
