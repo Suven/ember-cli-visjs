@@ -4,6 +4,7 @@ import ChildMixin from 'ember-cli-visjs/mixins/child';
 export default Component.extend(ChildMixin, {
   didCreateLayer() {},
   willDestroyLayer() {},
+  select() {},
 
   layerSetup() {
     if (this.get('containerLayer')) {
