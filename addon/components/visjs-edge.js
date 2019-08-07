@@ -1,5 +1,5 @@
-import Ember from 'ember';
 import VisJsChild from 'ember-cli-visjs/components/visjs-child';
+import { computed, observer } from '@ember/object';
 
 export default VisJsChild.extend({
   type: 'edge',
@@ -20,11 +20,11 @@ export default VisJsChild.extend({
    */
   to: '',
 
-  eId: Ember.computed('from', 'to', function() {
+  eId: computed('from', 'to', function() {
     return `${this.get('from')}-${this.get('to')}`;
   }),
 
-  arrowChanged: Ember.observer('arrows', function() {
+  arrowChanged: observer('arrows', function() {
     let container = this.get('containerLayer');
     container.updateEdgeArrow(this.get('eId'), this.get('arrows'));
   })

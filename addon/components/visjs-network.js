@@ -1,12 +1,12 @@
 /* globals vis */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 import ContainerMixin from 'ember-cli-visjs/mixins/container';
 import layout from '../templates/components/visjs-network';
+import { A } from '@ember/array';
+import { assert, debug } from '@ember/debug';
 
-const { A, assert, debug } = Ember;
-
-export default Ember.Component.extend(ContainerMixin, {
+export default Component.extend(ContainerMixin, {
   layout,
   classNames: ['ember-cli-visjs ember-cli-visjs-network'],
 

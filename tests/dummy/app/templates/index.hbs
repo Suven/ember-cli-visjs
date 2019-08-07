@@ -161,7 +161,7 @@
   bX: 50,
   bY: 50,
 
-  posOfBChanged: Ember.observer('bX', 'bY', function() {
+  posOfBChanged: observer('bX', 'bY', function() {
     console.log(`B was moved to ${this.get('bX')}/${this.get('bY')}`);
   }),</pre>
 

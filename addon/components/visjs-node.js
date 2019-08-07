@@ -1,4 +1,4 @@
-import Ember from 'ember';
+import { observer } from '@ember/object';
 import VisJsChild from 'ember-cli-visjs/components/visjs-child';
 
 export default VisJsChild.extend({
@@ -22,7 +22,7 @@ export default VisJsChild.extend({
    */
   color: false,
 
-  colorChanged: Ember.observer('color', function() {
+  colorChanged: observer('color', function() {
     let container = this.get('containerLayer');
     container.updateNodeColor(this.get('nId'), this.get('color'));
   }),
@@ -36,7 +36,7 @@ export default VisJsChild.extend({
    */
   label: undefined,
 
-  labelChanged: Ember.observer('label', function() {
+  labelChanged: observer('label', function() {
     let container = this.get('containerLayer');
     container.updateNodeLabel(this.get('nId'), this.get('label'));
   }),
@@ -49,7 +49,7 @@ export default VisJsChild.extend({
    */
   level: undefined,
 
-  levelChanged: Ember.observer('level', function() {
+  levelChanged: observer('level', function() {
     let container = this.get('containerLayer');
     container.updateNodeLevel(this.get('nId'), this.get('level'));
   }),
@@ -62,7 +62,7 @@ export default VisJsChild.extend({
    */
   image: false,
 
-  imageChanged: Ember.observer('image', function() {
+  imageChanged: observer('image', function() {
     let container = this.get('containerLayer');
     container.updateNodeImage(this.get('nId'), this.get('image'));
   })

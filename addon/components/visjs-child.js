@@ -1,9 +1,9 @@
-import Ember from 'ember';
+import Component from '@ember/component';
 import ChildMixin from 'ember-cli-visjs/mixins/child';
 
-export default Ember.Component.extend(ChildMixin, {
-  didCreateLayer: Ember.K,
-  willDestroyLayer: Ember.K,
+export default Component.extend(ChildMixin, {
+  didCreateLayer() {},
+  willDestroyLayer() {},
 
   layerSetup() {
     if (this.get('containerLayer')) {
