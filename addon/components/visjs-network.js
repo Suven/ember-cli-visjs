@@ -73,18 +73,24 @@ export default Component.extend(ContainerMixin, {
     this.setupBackgroundImage();
   },
 
-  didUpdateAttrs(changes) {
+  didUpdateAttrs() {
     this._super(...arguments);
 
-    if (changes.newAttrs.backgroundImage) {
+    let oldBackgroundImage = this.get('_oldBackgroundImage')
+    let newBackgroundImage = this.get('backgroundImage')
+    if (oldBackgroundImage !== newBackgroundImage) {
       this.setupBackgroundImage();
     }
 
-    if (changes.newAttrs.addEdges) {
+    let oldAddEdges = this.get('_oldAddEdges')
+    let newAddEdges = this.get('addEdges')
+    if (oldAddEdges !== newAddEdges) {
       this.setupAddEdges();
     }
 
-    if (changes.newAttrs.options) {
+    let oldOptions = this.get('_oldOptions')
+    let newOptions = this.get('options')
+    if (oldOptions !== newOptions) {
       this.setupAddEdges();
     }
   },
