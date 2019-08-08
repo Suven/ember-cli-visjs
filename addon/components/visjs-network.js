@@ -44,7 +44,7 @@ export default Component.extend(ContainerMixin, {
         matchingChildNode.get('select')(selectedNode, e);
       }
     });
-    
+
     network.on('selectEdge', (e) => {
       let [ selectedEdge ] = e.edges;
       let matchingChildEdge = _this.get('_childLayers').find((c) => {
@@ -166,7 +166,9 @@ export default Component.extend(ContainerMixin, {
 
     if (type === 'node') {
       this.get('nodes').remove(child.get('nId'));
-    } else if (type !== 'edge') {
+    } else if (type === 'edge') {
+      this.get('edges').remove(child.get('eId'));
+    } else {
       debug(`Child of type ${type} not supported by ember-cli-visjs`);
     }
   },
