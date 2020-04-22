@@ -1,12 +1,12 @@
 /* globals vis */
 
-import Ember from 'ember';
+import Component from '@ember/component';
 import ContainerMixin from 'ember-cli-visjs/mixins/container';
 import layout from '../templates/components/visjs-network';
+import { A } from '@ember/array';
+import { assert, debug } from '@ember/debug';
 
-const { A, assert, debug } = Ember;
-
-export default Ember.Component.extend(ContainerMixin, {
+export default Component.extend(ContainerMixin, {
   layout,
   classNames: ['ember-cli-visjs ember-cli-visjs-network'],
 
@@ -44,7 +44,7 @@ export default Ember.Component.extend(ContainerMixin, {
         matchingChildNode.get('select')(selectedNode, e);
       }
     });
-    
+
     network.on('selectEdge', (e) => {
       let [ selectedEdge ] = e.edges;
       let matchingChildEdge = _this.get('_childLayers').find((c) => {
@@ -73,18 +73,24 @@ export default Ember.Component.extend(ContainerMixin, {
     this.setupBackgroundImage();
   },
 
-  didUpdateAttrs(changes) {
+  didUpdateAttrs() {
     this._super(...arguments);
 
-    if (changes.newAttrs.backgroundImage) {
+    let oldBackgroundImage = this.get('_oldBackgroundImage')
+    let newBackgroundImage = this.get('backgroundImage')
+    if (oldBackgroundImage !== newBackgroundImage) {
       this.setupBackgroundImage();
     }
 
-    if (changes.newAttrs.addEdges) {
+    let oldAddEdges = this.get('_oldAddEdges')
+    let newAddEdges = this.get('addEdges')
+    if (oldAddEdges !== newAddEdges) {
       this.setupAddEdges();
     }
 
-    if (changes.newAttrs.options) {
+    let oldOptions = this.get('_oldOptions')
+    let newOptions = this.get('options')
+    if (oldOptions !== newOptions) {
       this.setupAddEdges();
     }
   },
@@ -160,7 +166,9 @@ export default Ember.Component.extend(ContainerMixin, {
 
     if (type === 'node') {
       this.get('nodes').remove(child.get('nId'));
-    } else if (type !== 'edge') {
+    } else if (type === 'edge') {
+      this.get('edges').remove(child.get('eId'));
+    } else {
       debug(`Child of type ${type} not supported by ember-cli-visjs`);
     }
   },
@@ -195,7 +203,7 @@ export default Ember.Component.extend(ContainerMixin, {
 
   addEdge(edge) {
     let edges = this.get('edges');
-    let simplifiedEdge = { id: edge.get('eId'), from: edge.get('from'), to: edge.get('to') };
+    let simplifiedEdge = { id: edge.get('eId'), from: edge.get('from'), to: edge.get('to'), label: edge.get('label') };
 
     if (edge.get('arrows')) {
       simplifiedEdge.arrows = edge.get('arrows');
@@ -231,7 +239,11 @@ export default Ember.Component.extend(ContainerMixin, {
     this.get('nodes').update({ id: nId, label });
   },
 
-  updateNodeLevel(nId, label) {
+  updateEdgeLabel(eId, label) {
+    this.get('edges').update({ id: eId, label });
+  },
+
+  updateNodeLevel(nId, level) {
     this.get('nodes').update({ id: nId, level });
   },
 

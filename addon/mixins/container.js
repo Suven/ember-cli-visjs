@@ -1,9 +1,8 @@
-import Ember from 'ember';
-
-const { A } = Ember;
+import Mixin from '@ember/object/mixin';
+import { A } from '@ember/array';
 
 // From https://github.com/miguelcobain/ember-leaflet/blob/master/addon/mixins/container.js
-export default Ember.Mixin.create({
+export default Mixin.create({
   _childLayers: null,
 
   init() {

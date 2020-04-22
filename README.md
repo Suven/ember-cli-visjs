@@ -6,7 +6,8 @@ See the [demo](http://suven.github.io/ember-cli-visjs/) for examples and usage-i
 
 A big _thank you_ to [ember-leaflet](https://github.com/miguelcobain/ember-leaflet) for their container/child-mixins.
 
-## Installation
+Installation
+------------------------------------------------------------------------------
 
 Make sure you are using a somewhat recent version of nodejs when installing. Everything > 4 should be fine.
 

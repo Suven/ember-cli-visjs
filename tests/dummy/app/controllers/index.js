@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import Controller from '@ember/controller';
+import { inject as injectService } from '@ember/service';
+import { observer } from '@ember/object';
+import { A } from '@ember/array';
 
-const { A } = Ember;
-
-export default Ember.Controller.extend({
-  notify: Ember.inject.service('notify'),
+export default = Controller.extend({
+  notify: injectService('notify'),
 
   network: false,
   icon: 'fire.png',
@@ -44,7 +45,7 @@ export default Ember.Controller.extend({
   bX: 50,
   bY: 50,
 
-  posOfBChanged: Ember.observer('bX', 'bY', function() {
+  posOfBChanged: observer('bX', 'bY', function() {
     this.get('notify').info(`B was moved to ${this.get('bX')}/${this.get('bY')}`);
   }),
 

@@ -1,9 +1,10 @@
-import Ember from 'ember';
+import Mixin from '@ember/object/mixin';
 import ContainerMixin from 'ember-cli-visjs/mixins/container';
-const { computed, assert } = Ember;
+import { computed } from '@ember/object';
+import { assert } from '@ember/debug';
 
 // From https://github.com/miguelcobain/ember-leaflet/blob/master/addon/mixins/child.js
-export default Ember.Mixin.create({
+export default Mixin.create({
 
   containerLayer: computed(function() {
     return this.nearestOfType(ContainerMixin);
